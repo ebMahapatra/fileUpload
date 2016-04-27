@@ -1,0 +1,31 @@
+<html>
+<head> 
+    
+    <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
+	 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+	<!--<script src="./scripts/index.js"> </script> -->
+    <script src="./scripts/coreScript.js"> </script>
+</head>
+
+<body> 
+
+	<div class="layoutContainer">
+        <div class="leftContainer" ng-app="fileuploadapp" ng-controller="fuController">  
+
+	        <h1>Erfassen Sie Ihren Event</h1>
+	        <input type="file" file-upl-directive = "getTheFiles($files)" multiple/> 
+	        <input type="button" ng-click="upload()" value="Upload" />
+	        <file-upload></file-upload>
+        </div>
+        <div class="rightContainer"> </div>
+    </div>
+	
+	
+</body>
+
+</html>
+
+
+
+
+
