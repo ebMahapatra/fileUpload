@@ -1,13 +1,11 @@
 
-"use strict";
+'use strict';
 console.log("inside corescript");
-angular.module("fileuploadapp", [])
+angular.module('eb.fileUpload', [])
 
-		.directive("fileUplDirective", ['$parse', function ($parse){
- 
+		.directive('fileUplDirective', ['$parse', function ($parse){ 
 			
 				function linkFiles(scope, element, attrs){
-
 					 var onChange = $parse(attrs.fileUplDirective);
 		             element.on('change', function (event) {
 		                    onChange(scope, { $files: event.target.files }
@@ -20,7 +18,7 @@ angular.module("fileuploadapp", [])
 				}
 			} ])
 
-			.controller("fuController", function($scope, $http){
+			.controller('uploadController', function($scope, $http){
 				
 				var formData = new FormData();
 				$scope.getTheFiles=function ($files){
@@ -58,11 +56,11 @@ angular.module("fileuploadapp", [])
 					 .then(
 					       function(response){
 					         // success callback
-					         console.log("success" + response);
+					         console.log('success' + response);
 					       }, 
 					       function(reason){
 					         // failure callback
-					         console.log("failure" + reason.data);
+					         console.log('failure' + reason.data);
 
 					       }
     					);

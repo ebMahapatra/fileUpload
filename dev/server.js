@@ -57,7 +57,8 @@
                   return;
             }
              res.end("File is uploaded");
-             console.log("success" + req.file.type);
+             //TODO: Check how to access the file here
+             //console.log("success" + req.file.type);
         });
        
     });
