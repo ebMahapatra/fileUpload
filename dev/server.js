@@ -7,7 +7,7 @@
     var morgan = require('morgan');             // log requests to the console (express4)
     var bodyParser = require('body-parser');
     app.use(bodyParser.json({limit: '50mb'}));
-    app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+    app.use(bodyParser.urlencoded({limit: '50mb', extended: false}));
     var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
     var multer = require('multer');
 
@@ -50,15 +50,14 @@
 
     //POST requests
     app.post('/upload', function(req, res) {
-        console.log("Inside post method");
         upload(req,res,function(err){
             if(err){
                   res.end("Error occurred while uploading file");
-                  console.log("Error occured while uploading file - " + req.file.filename);
+                  console.log("Error occured while uploading file - " );
                   return;
             }
              res.end("File is uploaded");
-             console.log("success");
+             console.log("success" + req.file.type);
         });
        
     });
