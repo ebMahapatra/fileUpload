@@ -1,7 +1,7 @@
 
 "use strict";
 console.log("inside corescript");
-angular.module("fileuploadapp")
+angular.module("fileuploadapp", [])
 
 		.directive("fileUplDirective", ['$parse', function ($parse){
  
@@ -22,15 +22,13 @@ angular.module("fileuploadapp")
 
 			.controller("fuController", function($scope, $http){
 				
-			//	function fuController($scope, $http){
-
 				var formData = new FormData();
 				$scope.getTheFiles=function ($files){
 					console.log("inside getfiles");
 					console.log("List of files: " + $files);
 					angular.forEach($files, function(value, key){
-						formData.append(key, value);
 						
+						formData.append('file', value);
 
 						/*if(value.type=="application/pdf"){
 							console.log("pdf file");
@@ -38,27 +36,23 @@ angular.module("fileuploadapp")
 
 						else
 							console.log("key: " + key + " value: "+ value.type);*/
-
 					});
+				};				
 
-				};
-				
-
-			//Uploading files 
-
+			//Uploading files
 			$scope.upload=function(){
-				
 				var request={
 					method: 'POST',
                     url: 'http://localhost:8080/upload',
-                  	data: formData,
+                  	data:formData,
                    	headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
+                        //'Content-Type': 'application/x-www-form-urlencoded',
+                        //'Content-Type': 'multipart/form-data',
+                        'Content-Type': undefined
                     }
 				};
-
-				//sending the files
 				
+				//sending the files				
 				$http(request)
 					
 					 .then(
@@ -74,4 +68,3 @@ angular.module("fileuploadapp")
     					);
 			}
 		});
-		//};
