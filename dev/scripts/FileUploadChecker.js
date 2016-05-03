@@ -6,6 +6,7 @@
 */
 function check(FileUploadFile file, FileUploadCheckConfig config){
 	let isValidFile=true;
+	let isValidFileSize=true;
 	let newSize=0;
 	/*Checks if unit of file size and user defined file size unit are same. 
 	If not, then file size unit is converted to bytes*/
@@ -31,7 +32,8 @@ function check(FileUploadFile file, FileUploadCheckConfig config){
 
 	//Checks if file size is <= user defined file size constraint
 	if (file.size > config.fileSize.value){
-		return false;
+		//return false;
+		isValidFileSize=false;
 	}
 	
 	/*Checks if the file type is same as one of the types defined by user. 
@@ -40,6 +42,8 @@ function check(FileUploadFile file, FileUploadCheckConfig config){
 	if(config.validFileTypes.length>0){
 		isValidFile=config.validFileTypes.indexOf(file.type.toLowerCase()) > -1? true:false
 	}
+
+	return(isValidFileSize && isValidFile);
 }
 
 
