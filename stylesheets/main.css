@@ -1,0 +1,40 @@
+body {
+  display: flex;
+  background: #e12a92;
+  /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(90deg, #e12a92, #f1731c);
+  /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(90deg, #e12a92, #f1731c);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(90deg, #e12a92, #f1731c);
+  /* For Firefox 3.6 to 15 */
+  background: linear-gradient(90deg, #e12a92, #f1731c);
+  /* Standard syntax*/
+  justify-content: center;
+  align-items: center;
+  padding: 15vw;
+  flex-wrap: nowrap; }
+
+.layoutContainer, .leftContainer, .rightContainer {
+  display: flex;
+  background-color: #ffffff;
+  width: 100vw;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: flex-start; }
+
+.leftContainer {
+  width: 55vw;
+  flex-direction: column; }
+
+.rightContainer {
+  width: 15vw;
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #f5afba), color-stop(100%, #fac697));
+  /* safari4+,chrome */
+  background: -webkit-linear-gradient(233deg, #fac697 0%, #f5afba 100%);
+  /* safari5.1+,chrome10+ */
+  background: linear-gradient(217deg, #fac697 0%, #f5afba 100%);
+  /* w3c */ }
+
+h1 {
+  margin-bottom: 10px; }
