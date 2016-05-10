@@ -3,45 +3,71 @@
 * Checks if file matches user defined constraints
 *
 */
-function check(FileUploadFile file, FileUploadCheckConfig config) {
-	//let isValidFile=true;
-	//let isValidFileSize=true;
-	//let newSize=0;
+exports.check = function(file, configHolder) {
+	let isValidFile=true;
+	let isValidType=true;
+	let err=[];
+	let validationResult={"isValidFile" : "", "errMsg" : ""};
+	//Looping over all objects in config
+	for (var configObject in configHolder.config) {
+			let isValidSize=true;
+			//Looping over validators[] in config
+			for (var validator in configHolder.config[configObject].validators) {
+				//comparator holds all comparators in validators[]
+				let comparator=configHolder.config[configObject].validators[validator].comparator;
+				//val holds all values in validators[]
+				let val=configHolder.config[configObject].validators[validator].value;
+				//Validations for file size
+				if(configHolder.config[configObject].object.identifier === 'size') {
+					switch(comparator) {
+						case '>':
+						if (!(file.size > val))
+							isValidSize=false;					
+						break;
 
-	/*Checks if unit of file size and user defined file size unit are same. 
-	If not, then file size unit is converted to bytes*/
-	/*if (file.sizeUnit != config.fileSize.unit) {
-		switch(config.fileSize.unit){
-			case 'KB':
-				newSize = file.size / 1024;
-				break;
-			case 'MB':
-				newSize = file.size / (1024 * 1024);
-				break;
-			case 'GB':
-				newSize = file.size / (1024 * 1024 * 1024);
-				break;
-			default:
-                newSize =file.size;
-		}
-		file.size = newSize.toFixed(2);
-	}*/
-	/*
-	//Checks if file size is <= user defined file size constraint
-	if (file.size > config.fileSize.value) {
-		//return false;
-		isValidFileSize = false;
+	    				case '<=':
+						if (!(file.size <= val))
+							isValidSize=false;
+						break;
+    				}
+				}
+				//Validations for file type
+                if(configHolder.config[configObject].object.identifier === 'type') {
+                    switch(comparator) {
+                        case 'in':
+                        if (val.indexOf(file.type) == -1)
+                            isValidType=false;
+                        break;
+                    }
+                }
+				
+			}
+			//Generating error if file size not valid and setting the entire file as an invalid file
+			if (!isValidSize)
+			{
+				isValidFile = false;
+				err.push("Invalid file size");
+			}
+			//Generating error if file type not valid and setting the entire file as an invalid file
+			if (!isValidType)
+			{
+				isValidFile = false;
+				err.push("Invalid file type");
+			}		
 	}
+	validationResult.isValidFile = isValidFile;
+	validationResult.errMsg = err;
+	return validationResult;
+};
 
-	Checks if the file type is same as one of the types defined by user. 
-	  If no file type is defined by user, files of all types(extensions) are considered valid
-		
-	if (config.validFileTypes.length > 0) {
-		isValidFile = config.validFileTypes.indexOf(file.type.toLowerCase()) > -1 ? true : false
-	}
-	return (isValidFileSize && isValidFile);
-	*/
-	//Checks if file size is <= user defined file size constraint and if the file type is same as one of the types defined by user. 
 
-	return((file.size <= config.fileSize.value) && (config.validFileTypes.indexOf(file.type.toLowerCase()) > -1));
-}
+
+
+
+
+
+
+
+
+
+
