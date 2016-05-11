@@ -13,23 +13,19 @@ angular.module('eb.fileUpload', [])
 			link:linkFiles
 		}
 	}])
-	.controller('uploadController', function($scope, $http){
+	.controller('uploadController', function($http){
 		var formData = new FormData();
-		$scope.getTheFiles=function ($files){
+		var vm = this;
+		vm.getTheFiles=function ($files){
 			console.log("inside getfiles");
 			console.log("List of files: " + $files);
 			angular.forEach($files, function(value, key){
 				formData.append('file', value);
-				/*if(value.type=="application/pdf"){
-							console.log("pdf file");
-					}
-
-					else
-						console.log("key: " + key + " value: "+ value.type);*/
+				check(value,config);
 			});
 		};
 		//Uploading files
-		$scope.upload=function(){
+		vm.upload=function(){
 			var request={
 				method: 'POST',
                 url: 'http://localhost:8080/upload',
