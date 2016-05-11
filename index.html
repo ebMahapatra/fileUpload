@@ -2,17 +2,17 @@
 <head> 
     <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-	<!--<script src="./js/coreScript.js"> </script>-->
+	<script src="./js/coreScript.js"> </script>
 	<script src="./js/FileUploadFile.js"> </script>
 	<script src="./js/FileUploadCheckConfig.js"> </script>
 	<script src="./js/FileUploadChecker.js"> </script>
 </head>
 <body> 
     <div class="layoutContainer">
-        <div class="leftContainer" ng-app="eb.fileUpload" ng-controller="uploadController">
+        <div class="leftContainer" ng-app="eb.fileUpload" ng-controller="uploadController as uplController">
 	        <h1>Erfassen Sie Ihren Event</h1>
-	        <input type="file" file-upl-directive="getTheFiles($files)" multiple/> 
-	        <input type="button" ng-click="upload()" value="Upload"/>
+	        <input type="file" file-upl-directive="uplController.getTheFiles($files)" multiple/> 
+	        <input type="button" ng-click="uplController.upload()" value="Upload"/>
         </div>
         <div class="rightContainer"> </div>
     </div>
