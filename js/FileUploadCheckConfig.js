@@ -11,7 +11,7 @@
 	}
 	,validFileTypes: []
 };*/
-exports.config = [{
+this.config = [{
 	"object": {
 		"identifier": "size"
         , "name": "file size"

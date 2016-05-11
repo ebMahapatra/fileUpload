@@ -3,7 +3,7 @@
 * Used to instantiate objects that store information regarding every file
 *
 */
-exports.uploadFile = function() {
+this.uploadFile = function() {
     this.file;
 	this.status = ''; //queued, uploading, success, error
 	this.type = ''; // image, pdf. text etc.

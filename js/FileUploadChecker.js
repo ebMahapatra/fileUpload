@@ -3,7 +3,7 @@
 * Checks if file matches user defined constraints
 *
 */
-exports.check = function(file, configHolder) {
+this.check = function(file, configHolder) {
 	let isValidFile=true;
 	let isValidType=true;
 	let err=[];
@@ -46,13 +46,13 @@ exports.check = function(file, configHolder) {
 			if (!isValidSize)
 			{
 				isValidFile = false;
-				err.push("Invalid file size");
+				err.push('Invalid file size');
 			}
 			//Generating error if file type not valid and setting the entire file as an invalid file
 			if (!isValidType)
 			{
 				isValidFile = false;
-				err.push("Invalid file type");
+				err.push('Invalid file type');
 			}		
 	}
 	validationResult.isValidFile = isValidFile;
