@@ -3,36 +3,37 @@
 * Checks if file matches user defined constraints
 *
 */
-this.check = function(file, configHolder) {
+this.check = function(file, config) {
+	console.log(file.type);
 	let isValidFile=true;
 	let isValidType=true;
 	let err=[];
 	let validationResult={"isValidFile" : "", "errMsg" : ""};
 	//Looping over all objects in config
-	for (var configObject in configHolder.config) {
+	for (var configObject in config) {
 			let isValidSize=true;
 			//Looping over validators[] in config
-			for (var validator in configHolder.config[configObject].validators) {
+			for (var validator in config[configObject].validators) {
 				//comparator holds all comparators in validators[]
-				let comparator=configHolder.config[configObject].validators[validator].comparator;
+				let comparator=config[configObject].validators[validator].comparator;
 				//val holds all values in validators[]
-				let val=configHolder.config[configObject].validators[validator].value;
+				let val=config[configObject].validators[validator].value;
 				//Validations for file size
-				if(configHolder.config[configObject].object.identifier === 'size') {
+				if(config[configObject].object.identifier === 'size') {
 					switch(comparator) {
 						case '>':
 						if (!(file.size > val))
-							isValidSize=false;					
+							isValidSize=false;				
 						break;
 
 	    				case '<=':
 						if (!(file.size <= val))
-							isValidSize=false;
+							isValidSize=false;		
 						break;
     				}
 				}
 				//Validations for file type
-                if(configHolder.config[configObject].object.identifier === 'type') {
+                if(config[configObject].object.identifier === 'type') {
                     switch(comparator) {
                         case 'in':
                         if (val.indexOf(file.type) == -1)
