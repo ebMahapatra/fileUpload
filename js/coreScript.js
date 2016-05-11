@@ -1,6 +1,7 @@
 'use strict';
-console.log("inside corescript");
+//file upload module
 angular.module('eb.fileUpload', [])
+	//fileUplDirective used for choose files button
 	.directive('fileUplDirective', ['$parse', function ($parse) { 
 		function linkFiles(scope, element, attrs){
 			var onChange = $parse(attrs.fileUplDirective);
@@ -14,14 +15,26 @@ angular.module('eb.fileUpload', [])
 		}
 	}])
 	.controller('uploadController', function($http){
-		var formData = new FormData();
 		var vm = this;
+		let formData = new FormData();
+		//To get all the files chosen in the GUI
 		vm.getTheFiles=function ($files){
-			console.log("inside getfiles");
-			console.log("List of files: " + $files);
+			//Looping over the list of selected files to get information regarding every file
 			angular.forEach($files, function(value, key){
+				//Storing every file in formData
 				formData.append('file', value);
-				check(value,config);
+				//Calling uploadFile() of FileUploadFile.js to store selected file and its attributes
+				let file = new uploadFile();
+				//Storing each file in rawFile property of uploadFile()
+				file.rawFile=value;
+				//Assigning selected file's size to 'size' property of uploadFile()
+				file.size=value.size;
+				//Assigning selected file's type to 'type' property of uploadFile()
+				file.type=value.type;
+				//Calling check() of FileUploadChecker.js to validate the file attributes
+				let validationResult = check(file,config);
+				console.log(validationResult.isValidFile);
+				console.log(validationResult.errMsg);
 			});
 		};
 		//Uploading files
@@ -31,12 +44,10 @@ angular.module('eb.fileUpload', [])
                 url: 'http://localhost:8080/upload',
                 data:formData,
                 headers: {
-                //'Content-Type': 'application/x-www-form-urlencoded',
-                //'Content-Type': 'multipart/form-data',
                 'Content-Type': undefined
                 }
 		    };
-			//sending the files				
+			//sending files			
 			$http(request)
 				.then(
 					function(response){
