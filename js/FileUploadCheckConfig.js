@@ -3,14 +3,6 @@
 * Holds user defined constraints for file validation
 *
 */
-/*let config = {
-    fileSize: {
-        comparator: '>'
-		,value: ''
-		,unit: ''
-	}
-	,validFileTypes: []
-};*/
 this.config = [{
 	"object": {
 		"identifier": "size"
@@ -32,7 +24,7 @@ this.config = [{
     }
     , "validators": [{
     	"comparator": "in"
-        , "value": "image/jpeg, image/png, pdf"
+        , "value": "image/jpeg, image/png, application/pdf"
     }]
     
 }];
