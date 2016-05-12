@@ -20,9 +20,7 @@ angular.module('eb.fileUpload', [])
 		//To get all the files chosen in the GUI
 		vm.getTheFiles=function ($files){
 			//Looping over the list of selected files to get information regarding every file
-			angular.forEach($files, function(value, key){
-				//Storing every file in formData
-				formData.append('file', value);
+			angular.forEach($files, function(value, key){	
 				//Calling uploadFile() of FileUploadFile.js to store selected file and its attributes
 				let file = new uploadFile();
 				//Storing each file in rawFile property of uploadFile()
@@ -33,31 +31,38 @@ angular.module('eb.fileUpload', [])
 				file.type=value.type;
 				//Calling check() of FileUploadChecker.js to validate the file attributes
 				let validationResult = check(file,config);
-				console.log(validationResult.isValidFile);
-				console.log(validationResult.errMsg);
-			});
-		};
-		//Uploading files
-		vm.upload=function(){
-			var request={
-				method: 'POST',
-                url: 'http://localhost:8080/upload',
-                data:formData,
-                headers: {
-                'Content-Type': undefined
-                }
-		    };
-			//sending files			
-			$http(request)
-				.then(
+				if (validationResult.isValidFile == true) {
+					//Storing valid file in formData
+					formData.append('file', file.rawFile);
+					console.log("inside if: "+ formData);
+					//Uploading files
+					vm.upload=function(){
+						console.log("formdata is: " + formData);
+						var request={
+							method: 'POST',
+				        	url: 'http://localhost:8080/upload',
+				        	data:formData,
+				        	headers: {
+				        		'Content-Type': undefined
+				        	}
+						};
+					//sending files			
+					$http(request)
+					.then(
 					function(response){
-					// success callback
-					console.log('success' + response);
+						// success callback
+						console.log('success' + response);
+						console.log(response);
 					}, 
 					function(reason){
-					// failure callback
-					console.log('failure' + reason.data);
-					}
-	    		);
-		}
+						// failure callback
+						console.log('failure' + reason.data);
+					});
+				}
+			}
+				else {
+					console.log(validationResult.errMsg);
+				}
+			});
+		};
 	});
