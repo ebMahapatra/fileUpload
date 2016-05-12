@@ -4,7 +4,6 @@
 *
 */
 this.check = function(file, config) {
-	console.log(file.type);
 	let isValidFile=true;
 	let isValidType=true;
 	let err=[];
@@ -41,7 +40,6 @@ this.check = function(file, config) {
                         break;
                     }
                 }
-				
 			}
 			//Generating error if file size not valid and setting the entire file as an invalid file
 			if (!isValidSize)
