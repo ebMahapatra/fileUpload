@@ -17,6 +17,11 @@ angular.module('eb.fileUpload', [])
 	.controller('uploadController', function($http){
 		var vm = this;
 		let formData = new FormData();
+		let getErrorMessage = function(err) {
+			let errMsg = [];
+			errMsg.push(err);
+			console.log(errMsg);
+		}
 		//To get all the files chosen in the GUI
 		vm.getTheFiles=function ($files){
 			//Looping over the list of selected files to get information regarding every file
@@ -34,10 +39,8 @@ angular.module('eb.fileUpload', [])
 				if (validationResult.isValidFile == true) {
 					//Storing valid file in formData
 					formData.append('file', file.rawFile);
-					console.log("inside if: "+ formData);
-					//Uploading files
+					//Uploading valid files
 					vm.upload=function(){
-						console.log("formdata is: " + formData);
 						var request={
 							method: 'POST',
 				        	url: 'http://localhost:8080/upload',
@@ -52,7 +55,6 @@ angular.module('eb.fileUpload', [])
 					function(response){
 						// success callback
 						console.log('success' + response);
-						console.log(response);
 					}, 
 					function(reason){
 						// failure callback
@@ -61,7 +63,7 @@ angular.module('eb.fileUpload', [])
 				}
 			}
 				else {
-					console.log(validationResult.errMsg);
+					getErrorMessage(validationResult.errMsg);
 				}
 			});
 		};
