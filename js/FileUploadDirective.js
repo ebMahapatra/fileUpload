@@ -38,39 +38,19 @@ angular.module('eb.fileUpload', [])
 				let validationResult = check(file,config);
 				//Discarding the invalid files, so that only valid files are uploaded
 				if (validationResult.isValidFile) {
-
 					//Generate preview of image files
+					//Check if file is an image as preview is generated only for image files
 					if (file.type.match(/image.*/)) {
 						let imageSrc = handleFilePreview(file.rawFile);
 						console.log('image: ' + imageSrc);
 					}
-					
-
 					//Storing valid file in formData
 					formData.append('file', file.rawFile);
 					//Uploading valid files
 					vm.upload=function(){
-						var request={
-							method: 'POST',
-				        	url: 'http://localhost:8080/upload',
-				        	data:formData,
-				        	headers: {
-				        		'Content-Type': undefined
-				        	}
-						};
-					//sending files			
-					$http(request)
-					.then(
-					function(response){
-						// success callback
-						console.log('success: ' + response.data);
-					}, 
-					function(reason){
-						// failure callback
-						console.log('failure' + reason.data);
-					});
+						upload(formData, $http);
+					}
 				}
-			}
 				else {
 					getErrorMessage(validationResult.errMsg);
 				}
