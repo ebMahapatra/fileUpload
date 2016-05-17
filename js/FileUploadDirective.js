@@ -1,0 +1,79 @@
+'use strict';
+//file upload module
+angular.module('eb.fileUpload', [])
+	//fileUplDirective used for choose files button
+	.directive('fileUplDirective', ['$parse', function ($parse) { 
+		function linkFiles(scope, element, attrs){
+			var onChange = $parse(attrs.fileUplDirective);
+		    element.on('change', function (event) {
+		    	onChange(scope, { $files: event.target.files }
+		                );
+            });
+		};
+		return {
+			link:linkFiles
+		}
+	}])
+	.controller('uploadController', function($http){
+		var vm = this;
+		let formData = new FormData();
+		let getErrorMessage = function(err) {
+			let errMsg = [];
+			errMsg.push(err);
+			console.log(errMsg);
+		}
+		//To get all the files chosen in the GUI
+		vm.getTheFiles=function ($files){
+			//Looping over the list of selected files to get information regarding every file
+			angular.forEach($files, function(value, key){	
+				//Calling uploadFile() of FileUploadFile.js to store selected file and its attributes
+				let file = new uploadFile();
+				//Storing each file in rawFile property of uploadFile()
+				file.rawFile=value;
+				//Assigning selected file's size to 'size' property of uploadFile()
+				file.size=value.size;
+				//Assigning selected file's type to 'type' property of uploadFile()
+				file.type=value.type;
+				//Calling check() of FileUploadChecker.js to validate the file attributes
+				let validationResult = check(file,config);
+				//Discarding the invalid files, so that only valid files are uploaded
+				if (validationResult.isValidFile) {
+
+					//Generate preview of image files
+					if (file.type.match(/image.*/)) {
+						let imageSrc = handleFilePreview(file.rawFile);
+						console.log('image: ' + imageSrc);
+					}
+					
+
+					//Storing valid file in formData
+					formData.append('file', file.rawFile);
+					//Uploading valid files
+					vm.upload=function(){
+						var request={
+							method: 'POST',
+				        	url: 'http://localhost:8080/upload',
+				        	data:formData,
+				        	headers: {
+				        		'Content-Type': undefined
+				        	}
+						};
+					//sending files			
+					$http(request)
+					.then(
+					function(response){
+						// success callback
+						console.log('success: ' + response.data);
+					}, 
+					function(reason){
+						// failure callback
+						console.log('failure' + reason.data);
+					});
+				}
+			}
+				else {
+					getErrorMessage(validationResult.errMsg);
+				}
+			});
+		};
+	});
