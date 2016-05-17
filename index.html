@@ -3,6 +3,7 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 	<script src="./js/FileUploadDirective.js"> </script>
+	<script src="./js/FileUploadService.js"> </script>
 	<script src="./js/FileUploadFile.js"> </script>
 	<script src="./js/FileUploadCheckConfig.js"> </script>
 	<script src="./js/FileUploadChecker.js"> </script>
@@ -14,9 +15,6 @@
 	        <h1>Erfassen Sie Ihren Event</h1>
 	        <input type="file" file-upl-directive="uplController.getTheFiles($files)" multiple/> 
 	        <input type="button" ng-click="uplController.upload()" value="Upload"/>
-	        <div id="previewContainer"> 
-
-	        </div>
         </div>
         <div class="rightContainer"> </div>
     </div>
