@@ -9,16 +9,16 @@ this.check = function(file, config) {
 	let err=[];
 	let validationResult={"isValidFile" : "", "errMsg" : ""};
 	//Looping over all objects in config
-	for (var configObject in config) {
+	for (let configObject of config) {
 			let isValidSize=true;
 			//Looping over validators[] in config
-			for (var validator in config[configObject].validators) {
+			for (let validator of configObject.validators) {
 				//comparator holds all comparators in validators[]
-				let comparator=config[configObject].validators[validator].comparator;
+				let comparator = validator.comparator;
 				//val holds all values in validators[]
-				let val=config[configObject].validators[validator].value;
+				let val = validator.value;
 				//Validations for file size
-				if(config[configObject].object.identifier === 'size') {
+				if(configObject.object.identifier === 'size') {
 					switch(comparator) {
 						case '>':
 						if (!(file.size > val))
@@ -32,7 +32,7 @@ this.check = function(file, config) {
     				}
 				}
 				//Validations for file type
-                if(config[configObject].object.identifier === 'type') {
+                if(configObject.object.identifier === 'type') {
                     switch(comparator) {
                         case 'in':
                         if (val.indexOf(file.type) == -1)
