@@ -10,7 +10,8 @@ let handleFilePreview = function(file) {
 		var reader = new FileReader();
 		reader.onload = function(e) {
 		dataURL = reader.result;
-		console.log(dataURL);
+		console.log(e.srcElement);
+		//document.getElementById('previewImage').setAttribute('src', e.target.result);
 		}
 		reader.readAsDataURL(file);
 };
