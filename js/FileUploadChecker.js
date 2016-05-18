@@ -13,29 +13,27 @@ this.check = function(file, config) {
 			let isValidSize=true;
 			//Looping over validators[] in config
 			for (let validator of configObject.validators) {
-				//comparator holds all comparators in validators[]
-				let comparator = validator.comparator;
-				//val holds all values in validators[]
-				let val = validator.value;
 				//Validations for file size
 				if(configObject.object.identifier === 'size') {
-					switch(comparator) {
+					//Validating for every comparator for size
+					switch(validator.comparator) {
 						case '>':
-						if (!(file.size > val))
+						if (!(file.size > validator.value))
 							isValidSize=false;				
 						break;
 
 	    				case '<=':
-						if (!(file.size <= val))
+						if (!(file.size <= validator.value))
 							isValidSize=false;		
 						break;
     				}
 				}
 				//Validations for file type
                 if(configObject.object.identifier === 'type') {
-                    switch(comparator) {
+                	//Validating for every comparator for type
+                    switch(validator.comparator) {
                         case 'in':
-                        if (val.indexOf(file.type) == -1)
+                        if (validator.value.indexOf(file.type) == -1)
                             isValidType=false;
                         break;
                     }
