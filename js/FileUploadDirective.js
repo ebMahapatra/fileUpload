@@ -42,7 +42,6 @@ angular.module('eb.fileUpload', [])
 					//Check if file is an image as preview is generated only for image files
 					if (file.type.match(/image.*/)) {
 						let imageSrc = handleFilePreview(file.rawFile);
-						console.log('image: ' + imageSrc);
 					}
 					//Storing valid file in formData
 					formData.append('file', file.rawFile);
@@ -50,6 +49,10 @@ angular.module('eb.fileUpload', [])
 					vm.upload=function(){
 						upload(formData, $http);
 					}
+					//Cancelling file upload process
+					/*vm.cancelUpload=function(){
+						cancelUpload(file.rawFile);
+					}*/
 				}
 				else {
 					getErrorMessage(validationResult.errMsg);

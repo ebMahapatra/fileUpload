@@ -4,7 +4,7 @@
 *
 */
 //Creating upload request
-let upload=function(formData, $http) {
+let upload = function(formData, $http) {
 	var request={
 		method: 'POST'
 		, url: 'http://localhost:8080/upload'
@@ -14,12 +14,18 @@ let upload=function(formData, $http) {
 		}
 	};
 	//sending files			
-	$http(request).then(function(response){
+	$http(request).then(function(response) {
 		// success callback
 		console.log('success: ' + response.data);
 	} 
-	, function(reason){
+	, function(reason) {
 		// failure callback
 		console.log('failure' + reason.data);
 	});
 }; 
+
+/*let cancelUpload = function(file) {
+	var reader = new FileReader();
+	reader.readAsDataURL(file);
+	reader.abort(); 
+}*/
