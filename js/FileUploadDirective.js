@@ -4,7 +4,7 @@ angular.module('eb.fileUpload', [])
 	//fileUplDirective used for choose files button
 	.directive('fileUplDirective', ['$parse', function ($parse) { 
 		function linkFiles(scope, element, attrs){
-			var onChange = $parse(attrs.fileUplDirective);
+			let onChange = $parse(attrs.fileUplDirective);
 		    element.on('change', function (event) {
 		    	onChange(scope, { $files: event.target.files }
 		                );
@@ -15,7 +15,7 @@ angular.module('eb.fileUpload', [])
 		}
 	}])
 	.controller('uploadController', function($http){
-		var vm = this;
+		const vm = this;
 		let formData = new FormData();
 		let getErrorMessage = function(err) {
 			let errMsg = [];
@@ -23,17 +23,17 @@ angular.module('eb.fileUpload', [])
 			console.log(errMsg);
 		}
 		//To get all the files chosen in the GUI
-		vm.getTheFiles=function ($files){
+		vm.getTheFiles = function ($files){
 			//Looping over the list of selected files to get information regarding every file
 			angular.forEach($files, function(value, key){	
 				//Calling uploadFile() of FileUploadFile.js to store selected file and its attributes
 				let file = new uploadFile();
 				//Storing each file in rawFile property of uploadFile()
-				file.rawFile=value;
+				file.rawFile = value;
 				//Assigning selected file's size to 'size' property of uploadFile()
-				file.size=value.size;
+				file.size = value.size;
 				//Assigning selected file's type to 'type' property of uploadFile()
-				file.type=value.type;
+				file.type = value.type;
 				//Calling check() of FileUploadChecker.js to validate the file attributes
 				let validationResult = check(file,config);
 				//Discarding the invalid files, so that only valid files are uploaded
@@ -46,7 +46,7 @@ angular.module('eb.fileUpload', [])
 					//Storing valid file in formData
 					formData.append('file', file.rawFile);
 					//Uploading valid files
-					vm.upload=function(){
+					vm.upload = function(){
 						upload(formData, $http);
 					}
 					//Cancelling file upload process
@@ -60,3 +60,4 @@ angular.module('eb.fileUpload', [])
 			});
 		};
 	});
+	

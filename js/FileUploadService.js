@@ -5,7 +5,7 @@
 */
 //Creating upload request
 let upload = function(formData, $http) {
-	var request={
+	let request={
 		method: 'POST'
 		, url: 'http://localhost:8080/upload'
 		, data: formData
