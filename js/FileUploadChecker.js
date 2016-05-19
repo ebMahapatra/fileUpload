@@ -7,7 +7,7 @@ this.check = function(file, config) {
     let isValidFile = true;
     let isValidType = true;
     const err = [];
-    const validationResult = {"isValidFile" : false, "errMsg" : ""}; 
+    const validationResult = {isValidFile : false, errMsg : ""}; 
     //Looping over all objects in config
     for (let configObject of config) {
             let isValidSize = true;
