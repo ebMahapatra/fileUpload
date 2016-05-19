@@ -4,27 +4,26 @@
 *
 */
 this.config = [{
-	"object": {
-		"identifier": "size"
-        , "name": "file size"
+	object: {
+		identifier: 'size'
+        , name: 'file size'
     }
-    , "validators": [{
-    	"comparator": ">"
-        , "value": 100
+    , validators: [{
+    	comparator: '>'
+        , value: 100
     }
     , {
-    	"comparator": "<="
-        , "value": 1000
+    	comparator: '<='
+        , value: 1000
     }]
 }
 , {
-	"object": {
-		"identifier": "type"
-        , "name": "file type"
+	object: {
+		identifier: 'type'
+        , name: 'file type'
     }
-    , "validators": [{
-    	"comparator": "in"
-        , "value": "image/jpeg, image/png, application/pdf"
+    , validators: [{
+    	comparator: 'in'
+        , value: 'image/jpeg, image/png, application/pdf'
     }]
-    
 }];
