@@ -6,8 +6,8 @@
 this.check = function(file, config) {
     let isValidFile = true;
     let isValidType = true;
-    let err = [];
-    let validationResult = {"isValidFile" : false, "errMsg" : ""}; 
+    const err = [];
+    const validationResult = {"isValidFile" : false, "errMsg" : ""}; 
     //Looping over all objects in config
     for (let configObject of config) {
             let isValidSize = true;
@@ -19,13 +19,13 @@ this.check = function(file, config) {
                     switch(validator.comparator) {
                         case '>':
                         if (!(file.size > validator.value)) {
-                            isValidSize=false;              
+                            isValidSize = false;              
                         }
                         break;
 
                         case '<=':
                         if (!(file.size <= validator.value)) {
-                            isValidSize=false;   
+                            isValidSize = false;   
                         }
                         break;
                     }
@@ -36,7 +36,7 @@ this.check = function(file, config) {
                     switch(validator.comparator) {
                         case 'in':
                         if (validator.value.indexOf(file.type) === -1)
-                            isValidType=false;
+                            isValidType = false;
                         break;
                     }
                 }
