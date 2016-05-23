@@ -16,9 +16,10 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         "./test/FileUploadChecker.test.js"
-        , "./js/FileUploadChecker.js"
-        , "./js/FileUploadCheckConfig.js"
-        , "./js/FileUploadFile.js"
+        , "./js/es6/FileUploadChecker.js"
+        , "./js/es6/FileUploadCheckConfig.js"
+        , "./js/es6/FileUploadFile.js"
+         , "./js/es6/FileUploadDirective.js"
     ],
 
 
