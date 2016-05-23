@@ -18,6 +18,7 @@ angular.module('eb.fileUpload', [])
     .controller('uploadController', function($http){
         const vm = this;
         let formData = new FormData();
+        //handling the error messages
         let getErrorMessage = function(err) {
             let errMsg = [];
             errMsg.push(err);
@@ -36,7 +37,7 @@ angular.module('eb.fileUpload', [])
                 file.size = value.size;
                 //Assigning selected file's type to 'type' property of uploadFile()
                 file.type = value.type;
-                //Calling check() of FileUploadChecker.js to validate the file attributes
+                //Calling closure function of FileUploadChecker.js to validate the file attributes
                 let validationResult = window.ebFileUploader.fileValidator(file,config);
                 //Discarding the invalid files, so that only valid files are uploaded
                 if (validationResult.isValidFile) {
@@ -56,6 +57,7 @@ angular.module('eb.fileUpload', [])
                         cancelUpload(file.rawFile);
                     }*/
                 }
+                //Calling getErrorMessage() to handle error messages
                 else {
                     getErrorMessage(validationResult.errMsg);
                 }
