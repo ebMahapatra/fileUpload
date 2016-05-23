@@ -25,7 +25,6 @@ angular.module('eb.fileUpload', [])
         }
         //To get all the files chosen in the GUI
         vm.getTheFiles = function ($files){
-            console.log("Inside func");
             //Looping over the list of selected files to get information regarding every file
             angular.forEach($files, function(value, key){   
                 //Calling uploadFile() of FileUploadFile.js to store selected file and its attributes
@@ -39,9 +38,7 @@ angular.module('eb.fileUpload', [])
                 //Assigning selected file's type to 'type' property of uploadFile()
                 file.type = value.type;
                 //Calling check() of FileUploadChecker.js to validate the file attributes
-               // let validate = window.ebFileUploader.fileValidator;
                 let validationResult = window.ebFileUploader.fileValidator(file,config);
-                console.log(validationResult.isValidFile);
                 //Discarding the invalid files, so that only valid files are uploaded
                 if (validationResult.isValidFile) {
                     //Generate preview of image files

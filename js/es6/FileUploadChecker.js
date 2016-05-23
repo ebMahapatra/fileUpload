@@ -11,7 +11,7 @@ window.ebFileUploader.fileValidator = (function () {
             //Assigning the values of file and config received from FileUploadDirective to file and config properties respectively
             this.file = file; 
             this.config = config;
-            //this.err = [];
+            this.err = [];
         }
     //Getter property for boolean isValidFile
     get isValidFile() {
@@ -55,22 +55,34 @@ window.ebFileUploader.fileValidator = (function () {
                 if (!isValidSize)
                 {
                     isValidFile = false;
-                    err.push('Invalid file size');
+                    this.err.push('Invalid file size');
                 }
                 //Generating error if file type not valid and setting the entire file as an invalid file
                 if (!isValidType)
                 {
                     isValidFile = false;
-                    err.push('Invalid file type');
-                }       
+                    this.err.push('Invalid file type');
+                }  
         }
         return isValidFile;
+    }
+
+      //Getter property for String Error message
+     /* get err() {
+        //return this.err;
+        console.log(err);
+      }*/
+      get errMsg() {
+        let err = this.err;
+        return err;
       }
+
     }
     return function check(file,config) {
         let checker = new window.ebFileUploader.Checker(file,config);
         const validationResult = {isValidFile : false, errMsg : ""};
         validationResult.isValidFile = checker.isValidFile;
+        validationResult.errMsg = checker.errMsg;
         return validationResult;
     }
     //return check;
