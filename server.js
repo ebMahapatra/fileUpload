@@ -2,8 +2,8 @@
 // server.js
 
     // set up ========================
-    var express  = require('express');
-    var app      = express();                               // create our app w/ express
+    var express = require('express');
+    var app = express();                               // create our app w/ express
     var morgan = require('morgan');             // log requests to the console (express4)
     var bodyParser = require('body-parser');
     app.use(bodyParser.json({limit: '50mb'}));
@@ -21,9 +21,6 @@
    // app.use(bodyParser.json({ type: 'application/json' })); // parse application/vnd.api+json as json
     app.use(methodOverride());
 
-
-
-
     //Storage definition for incoming file
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
@@ -37,16 +34,13 @@
     //Single file api call to multer as only one file gets associated with an incoming request
     var upload = multer({ storage : storage }).single('file');
 
-
-
-// application ------------------------------------------------------------
+    // application ------------------------------------------------------------
 
     //GET requests
     app.get('/index.html', function(req, res) {
     // load the single view file (angular will handle the page changes on the front-end)
         res.sendFile(__dirname + '/index.html');
     });
-
 
     //POST requests
     app.post('/upload', function(req, res) {
@@ -57,8 +51,6 @@
                   return;
             }
              res.end("File is uploaded");
-             //TODO: Check how to access the file here
-             //console.log("success" + req.file.type);
         });
        
     });
