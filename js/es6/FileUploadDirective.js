@@ -27,8 +27,7 @@ angular.module('eb.fileUpload', [])
         vm.getTheFiles = function ($files){
             //Looping over the list of selected files to get information regarding every file
             angular.forEach($files, function(value, key){   
-                //Calling uploadFile() of FileUploadFile.js to store selected file and its attributes
-                //let file = new uploadFile();
+                //Storing namespace properties for UploadFile and config
                 let file = window.ebFileUploader.UploadFile;
                 let config = window.ebFileUploader.config;
                 //Storing each file in rawFile property of uploadFile()
