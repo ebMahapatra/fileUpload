@@ -1,152 +1,85 @@
 'use strict';
 let file = window.ebFileUploader.UploadFile;
 let config = window.ebFileUploader.config;
-let validFileSize = [100, 150, 1000];
+let validFileSize = [150, 1000];
 let invalidFileSize = [50, 1001, 1000000];
 let validFileType = ['application/pdf', 'image/jpeg', 'image/png'];
 let invalidFileType = ['image/gif', 'txt'];
 
-
 //Test cases for validating file size
 describe('Validating file attributes', function() {
-	it('check file size greater than minimum value specified in config', function() {
+	it('Validate with valid file size and valid file type and check error message', function() {
+		//Looping over the array for valid file sizes
 		for (let i = 0; i < validFileSize.length; i++) {
+			//Assigning every value in array to size atttribute of file
 			file.size = validFileSize[i];
+			//Looping over the array for valid file types
+			for (let j = 0; j < validFileType.length; j++) {
+				//Assigning every value in array to type atttribute of file
+				file.type = validFileType[j];
+				//Calling fileValidator() to validate
+				let validationResult = window.ebFileUploader.fileValidator(file,config);
+				//Checking file's validity for valid size and type
+				expect(validationResult.isValidFile).toBe(true);
+				//Checking there exists no error message for valid files
+				expect(validationResult.errMsg.length).toBe(0);
+			}
 		}
-		for (let i = 0; i < validFileType.length; i++) {
-			file.type = validFileType[i];
-		}
-		let validationResult = window.ebFileUploader.fileValidator(file,config);
-		expect(validationResult.isValidFile).toBe(true);
 	});
 
-	it('check file size not less than minimum value specified in config', function() {
-		for (let i = 0; i < invalidFileSize.length; i++) {
-			file.size = invalidFileSize[i];
-		}
-		for (let i = 0; i < validFileType.length; i++) {
-			file.type = validFileType[i];
-		}
-		let validationResult = window.ebFileUploader.fileValidator(file,config);
-		expect(validationResult.isValidFile).toBe(false);
-	});
-
-	it('check file size equal to maximum value specified in config', function() {
+	it('check for valid file size and invalid file type', function() {
+		//Looping over the array for valid file sizes
 		for (let i = 0; i < validFileSize.length; i++) {
+			//Assigning every value in array to size atttribute of file
 			file.size = validFileSize[i];
+			//Looping over the array for invalid file types
+			for (let j = 0; j < invalidFileType.length; j++) {
+				//Assigning every value in array to type atttribute of file
+				file.type = invalidFileType[j];
+				//Calling fileValidator() to validate
+				let validationResult = window.ebFileUploader.fileValidator(file,config);
+				//Checking file's validity for valid size and type
+				expect(validationResult.isValidFile).toBe(false);
+				//Validating if correct error message is generated
+				expect(validationResult.errMsg[0]).toBe('Invalid file type');
+			}
 		}
-		for (let i = 0; i < validFileType.length; i++) {
-			file.type = validFileType[i];
-		}
-		let validationResult = window.ebFileUploader.fileValidator(file,config);
-		expect(validationResult.isValidFile).toBe(true);
 	});
 
-	it('check file size <= maximum value specified in config', function() {
+	it('check for invalid file size and valid file type', function() {
 		for (let i = 0; i < invalidFileSize.length; i++) {
+			//Assigning every value in array to size atttribute of file
 			file.size = invalidFileSize[i];
+			//Looping over the array for invalid file types
+			for (let j = 0; j < validFileType.length; j++) {
+				//Assigning every value in array to type atttribute of file
+				file.type = validFileType[j];
+				//Calling fileValidator() to validate
+				let validationResult = window.ebFileUploader.fileValidator(file,config);
+				//Checking file's validity for valid size and type
+				expect(validationResult.isValidFile).toBe(false);
+				//Validating if correct error message is generated
+				expect(validationResult.errMsg[0]).toBe('Invalid file size');
+			}
 		}
-		for (let i = 0; i < validFileType.length; i++) {
-			file.type = validFileType[i];
-		}
-		let validationResult = window.ebFileUploader.fileValidator(file,config);
-		expect(validationResult.isValidFile).toBe(false);
 	});
 
-	it('check pdf, image/jpeg and image/png are the only valid file types', function() {
-		for (let i = 0; i < validFileSize.length; i++) {
-			file.size = validFileSize[i];
-		}
-		for (let i = 0; i < validFileType.length; i++) {
-			file.type = validFileType[i];
-		}
-		let validationResult = window.ebFileUploader.fileValidator(file,config);
-		expect(validationResult.isValidFile).toBe(true);
-
-	});
-
-	it('check with valid file size and invalid file type', function() {
-		for (let i = 0; i < validFileSize.length; i++) {
-			file.size = validFileSize[i];
-		}
-		for (let i = 0; i < invalidFileType.length; i++) {
-			file.type = invalidFileType[i];
-		}
-		let validationResult = window.ebFileUploader.fileValidator(file,config);
-		expect(validationResult.isValidFile).toBe(false);
-
-	});
-
-	it('check with invalid file size and valid file type', function() {
+	it('check for invalid file size and invalid file type', function() {
 		for (let i = 0; i < invalidFileSize.length; i++) {
+			//Assigning every value in array to size atttribute of file
 			file.size = invalidFileSize[i];
+			//Looping over the array for invalid file types
+			for (let j = 0; j < invalidFileType.length; j++) {
+				//Assigning every value in array to type atttribute of file
+				file.type = invalidFileType[j];
+				//Calling fileValidator() to validate
+				let validationResult = window.ebFileUploader.fileValidator(file,config);
+				//Checking file's validity for valid size and type
+				expect(validationResult.isValidFile).toBe(false);
+				//Validating if correct error message is generated
+				expect(validationResult.errMsg[0]).toBe('Invalid file size');
+				expect(validationResult.errMsg[1]).toBe('Invalid file type');
+			}
 		}
-		for (let i = 0; i < validFileType.length; i++) {
-			file.type = validFileType[i];
-		}
-		let validationResult = window.ebFileUploader.fileValidator(file,config);
-		expect(validationResult.isValidFile).toBe(false);
-
-	});
-
-	it('check with invalid file size and invalid file type', function() {
-		for (let i = 0; i < invalidFileSize.length; i++) {
-			file.size = invalidFileSize[i];
-		}
-		for (let i = 0; i < invalidFileType.length; i++) {
-			file.type = invalidFileType[i];
-		}
-		let validationResult = window.ebFileUploader.fileValidator(file,config);
-		expect(validationResult.isValidFile).toBe(false);
-
-	});
-
-	it('check error message for valid file size and invalid file type', function() {
-		for (let i = 0; i < validFileSize.length; i++) {
-			file.size = validFileSize[i];
-		}
-		for (let i = 0; i < invalidFileType.length; i++) {
-			file.type = invalidFileType[i];
-		}
-		let validationResult = window.ebFileUploader.fileValidator(file,config);
-		expect(validationResult.errMsg[0]).toBe('Invalid file type');
-
-	});
-
-	it('check error message for invalid file size and valid file type ', function() {
-		for (let i = 0; i < invalidFileSize.length; i++) {
-			file.size = invalidFileSize[i];
-		}
-		for (let i = 0; i < validFileType.length; i++) {
-			file.type = validFileType[i];
-		}
-		let validationResult = window.ebFileUploader.fileValidator(file,config);
-		expect(validationResult.errMsg[0]).toBe('Invalid file size');
-
-	});
-
-	it('check error message for invalid file size and invalid file type', function() {
-		for (let i = 0; i < invalidFileSize.length; i++) {
-			file.size = invalidFileSize[i];
-		}
-		for (let i = 0; i < invalidFileType.length; i++) {
-			file.type = invalidFileType[i];
-		}
-		let validationResult = window.ebFileUploader.fileValidator(file,config);
-		expect(validationResult.errMsg[0]).toBe('Invalid file size');
-		expect(validationResult.errMsg[1]).toBe('Invalid file type');
-
-	});
-
-	it('check if error message exists for valid file type and valid file size', function() {
-		for (let i = 0; i < validFileSize.length; i++) {
-			file.size = validFileSize[i];
-		}
-		for (let i = 0; i < validFileType.length; i++) {
-			file.type = validFileType[i];
-		}
-		let validationResult = window.ebFileUploader.fileValidator(file,config);
-		expect(validationResult.errMsg.length).toBe(0);
-
 	});
 });
