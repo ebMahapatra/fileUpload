@@ -15,11 +15,12 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        "./test/FileUploadChecker.test.js"
-        , "./js/es6/FileUploadChecker.js"
+        "./js/lib/angular.min.js"
+        ,"./js/es6/FileUploadDirective.js"
         , "./js/es6/FileUploadCheckConfig.js"
         , "./js/es6/FileUploadFile.js"
-         , "./js/es6/FileUploadDirective.js"
+        , "./js/es6/FileUploadChecker.js"
+        , "./test/FileUploadChecker.test.js"
     ],
 
 
@@ -31,8 +32,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-        'js/*.js': [ 'browserify' ],
-        'test/*.js': [ 'browserify' ]
+        './js/**/*.js': [ 'browserify' ],
+        './test/*.js': [ 'browserify' ]
     },
 
 
