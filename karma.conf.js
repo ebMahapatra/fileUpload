@@ -36,12 +36,26 @@ module.exports = function(config) {
         './test/*.js': [ 'browserify' ]
     },
 
+    browserify: {
+      debug: true
+    },
+
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
-
+    reporters: ['progress', 'html'],
+    
+    // the default configuration 
+    htmlReporter: {
+      outputDir: 'karma_html', // where to put the reports  
+      templatePath: null, // set if you moved jasmine_template.html 
+      focusOnFailures: true, // reports show failures on start 
+      namedFiles: false, // name files instead of creating sub-directories 
+      pageTitle: null, // page title for reports; browser info by default 
+      urlFriendlyName: false, // simply replaces spaces with _ for files/dirs 
+      reportName: 'report-summary-filename', // report summary filename; browser info by default 
+    },
 
     // web server port
     port: 3333,
@@ -72,5 +86,5 @@ module.exports = function(config) {
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity
-  })
-}
+  });
+};
