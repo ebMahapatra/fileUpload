@@ -15,6 +15,7 @@ angular.module('eb.fileUpload', [])
             link:linkFiles
         }
     }])
+    //controller for eb.fileUpload
     .controller('uploadController', function($http){
         const vm = this;
         let formData = new FormData();
@@ -24,7 +25,7 @@ angular.module('eb.fileUpload', [])
             errMsg.push(err);
             console.log(errMsg);
         }
-        //To get all the files chosen in the GUI
+        //To get all the files selected in the GUI
         vm.getTheFiles = function ($files){
             //Looping over the list of selected files to get information regarding every file
             angular.forEach($files, function(value, key){   
@@ -37,12 +38,12 @@ angular.module('eb.fileUpload', [])
                 file.size = value.size;
                 //Assigning selected file's type to 'type' property of uploadFile()
                 file.type = value.type;
-                //Calling closure function of FileUploadChecker.js to validate the file attributes
+                //Calling closure function of FileUploadChecker.js to validate file attributes
                 let validationResult = window.ebFileUploader.fileValidator(file,config);
                 //Discarding the invalid files, so that only valid files are uploaded
                 if (validationResult.isValidFile) {
-                    //Generate preview of image files
-                    //Check if file is an image as preview is generated only for image files
+                    //Generating preview of image files
+                    //Checking if file is an image as preview is generated only for image files
                     if (file.type.match(/image.*/)) {
                         let imageSrc = handleFilePreview(file.rawFile);
                     }

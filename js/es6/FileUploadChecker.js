@@ -13,8 +13,8 @@ window.ebFileUploader.fileValidator = (function () {
             this.config = config;
             this.err = [];
         }
-        //Getter property for boolean isValidFile
-        get isValidFile() {
+        //Method to validate files as per the configurations defned in config object
+        validateFiles() {  
             let isValidFile = true;
             let isValidType = true;
             const err = [];
@@ -66,6 +66,11 @@ window.ebFileUploader.fileValidator = (function () {
             }
             return isValidFile;
         }
+        //Getter property for boolean isValidFile
+        get isValidFile() {
+            return this.validateFiles();
+        }
+        //Getter property for error messages
         get errMsg() {
             let err = this.err;
             return err;
@@ -73,8 +78,10 @@ window.ebFileUploader.fileValidator = (function () {
     }
 
     //Contructs the validation result
-    return function check(file,config) {
+    return function generateResult(file,config) {
+        //Creating object for Checker class
         let checker = new window.ebFileUploader.Checker(file,config);
+        //validationResult stores the file validation result
         const validationResult = {isValidFile : false, errMsg : ""};
         validationResult.isValidFile = checker.isValidFile;
         validationResult.errMsg = checker.errMsg;
