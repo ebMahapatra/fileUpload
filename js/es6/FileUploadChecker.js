@@ -6,60 +6,69 @@
 window.ebFileUploader.fileValidator = (function () {
     'use strict';
     window.ebFileUploader.Checker = class {
-        //constructir function
+        //constructor function
         constructor(file, config) {
             //Assigning the values of file and config received from FileUploadDirective to file and config properties respectively
             this.file = file; 
             this.config = config;
             this.err = [];
         }
-        //Method to validate files as per the configurations defned in config object
+        //Method to validate file size
+        validateSize(validator, isValidSize) {
+            //Validating for every comparator defined in config object w.r.t size
+            switch(validator.comparator) {
+                case '>':
+                if (!(this.file.size > validator.value)) {
+                    isValidSize = false;  
+                }
+                break;
+
+                case '<=':
+                if (!(this.file.size <= validator.value)) {
+                    isValidSize = false;  
+                }
+                break;
+            }
+            return isValidSize;
+        }
+        //Method to validate file type
+        validateType(validator, isValidType) {
+            //Validating for every comparator defined in config object w.r.t type
+            switch(validator.comparator) {
+                case 'in':
+                if (validator.value.indexOf(this.file.type) === -1) {
+                    isValidType = false;
+                }
+                break;
+            }
+            return isValidType;
+        }
         validateFiles() {  
             let isValidFile = true;
-            let isValidType = true;
+            //let isValidFile = false;
             const err = [];
             //Looping over config object
             for (let configObject of this.config) {
                 let isValidSize = true;
+                let isValidType = true;
                     //Looping over validators[] in config
                     for (let validator of configObject.validators) {
                         //Validations for file size
                         if(configObject.object.identifier === 'size') {
-                            //Validating for every comparator for size
-                            switch(validator.comparator) {
-                                case '>':
-                                if (!(this.file.size > validator.value)) {
-                                    isValidSize = false;              
-                                }
-                                break;
-
-                                case '<=':
-                                if (!(this.file.size <= validator.value)) {
-                                    isValidSize = false;   
-                                }
-                                break;
-                            }
+                            isValidSize = this.validateSize(validator, isValidSize);
                         }
                         //Validations for file type
                         if(configObject.object.identifier === 'type') {
-                            //Validating for every comparator for type
-                            switch(validator.comparator) {
-                                case 'in':
-                                if (validator.value.indexOf(this.file.type) === -1)
-                                    isValidType = false;
-                                break;
-                            }
+                            isValidType = this.validateType(validator, isValidType);
                         }
                     }
                     //Generating error if file size not valid and setting the entire file as an invalid file
-                    if (!isValidSize)
-                    {
+                    if (!isValidSize) {
                         isValidFile = false;
                         this.err.push('Invalid file size');
                     }
                     //Generating error if file type not valid and setting the entire file as an invalid file
-                    if (!isValidType)
-                    {
+                    if (!isValidType) {
                         isValidFile = false;
                         this.err.push('Invalid file type');
                     }  
@@ -76,7 +85,6 @@ window.ebFileUploader.fileValidator = (function () {
             return err;
         }
     }
-
     //Contructs the validation result
     return function generateResult(file,config) {
         //Creating object for Checker class
@@ -87,5 +95,4 @@ window.ebFileUploader.fileValidator = (function () {
         validationResult.errMsg = checker.errMsg;
         return validationResult;
     }
-
 })(this);
