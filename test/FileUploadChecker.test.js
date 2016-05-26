@@ -19,13 +19,8 @@ describe('Validating file attributes', function() {
 				file.type = validFileType[j];
 				//creating object of Checker class
 				const checker = new window.ebFileUploader.Checker(config);
-				console.log(checker);
-				//Calling validateFile() to validate
-				const validationResult = checker.validateFile(file);
-				//Checking file's validity for valid size and type
-				expect(validationResult).toBe(true);
-				//Checking there exists no error message for valid files
-				expect(checker.errors.length).toBe(0);
+				//Calling validateFile() to validate file with valid size and type
+				expect(checker.validateFile(file)).toBe(0);
 			}
 		}
 	});
@@ -41,12 +36,8 @@ describe('Validating file attributes', function() {
 				file.type = invalidFileType[j];
 				//creating object of Checker class
 				const checker = new window.ebFileUploader.Checker(config);
-				//Calling validateFile() to validate
-				const validationResult = checker.validateFile(file);
-				//Checking file's validity for valid size and type
-				expect(validationResult).toBe(false);
-				//Validating if correct error message is generated
-				expect(checker.errors.length).toBe(1);
+				//Calling validateFile() to validate file with valid size and invalid type
+				expect(checker.validateFile(file)).toBe(1);
 			}
 		}
 	});
@@ -61,12 +52,8 @@ describe('Validating file attributes', function() {
 				file.type = validFileType[j];
 				//creating object of Checker class
 				const checker = new window.ebFileUploader.Checker(config);
-				//Calling validateFile() to validate
-				const validationResult = checker.validateFile(file);
-				//Checking file's validity for valid size and type
-				expect(validationResult).toBe(false);
-				//Validating if correct error message is generated
-				expect(checker.errors.length).toBe(1);
+				//Calling validateFile() to validate file with invalid size and valid type
+				expect(checker.validateFile(file)).toBe(1);
 			}
 		}
 	});
@@ -81,12 +68,8 @@ describe('Validating file attributes', function() {
 				file.type = invalidFileType[j];
 				//creating object of Checker class
 				const checker = new window.ebFileUploader.Checker(config);
-				//Calling validateFile() to validate
-				const validationResult = checker.validateFile(file);
-				//Checking file's validity for valid size and type
-				expect(validationResult).toBe(false);
-				//Validating if correct error message is generated
-				expect(checker.errors.length).toBe(2);
+				//Calling validateFile() to validate file with invalid size and intype
+				expect(checker.validateFile(file)).toBe(2);
 			}
 		}
 	});
