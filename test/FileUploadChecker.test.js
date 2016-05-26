@@ -41,7 +41,7 @@ describe('Validating file attributes', function() {
 				//Checking file's validity for valid size and type
 				expect(validationResult.isValidFile).toBe(false);
 				//Validating if correct error message is generated
-				expect(validationResult.errMsg[0]).toBe('Invalid file type');
+				expect(validationResult.errMsg[0]).toBe('File type is not supported');
 			}
 		}
 	});
@@ -59,7 +59,7 @@ describe('Validating file attributes', function() {
 				//Checking file's validity for valid size and type
 				expect(validationResult.isValidFile).toBe(false);
 				//Validating if correct error message is generated
-				expect(validationResult.errMsg[0]).toBe('Invalid file size');
+				expect(validationResult.errMsg.length).toBe(1);
 			}
 		}
 	});
@@ -77,8 +77,8 @@ describe('Validating file attributes', function() {
 				//Checking file's validity for valid size and type
 				expect(validationResult.isValidFile).toBe(false);
 				//Validating if correct error message is generated
-				expect(validationResult.errMsg[0]).toBe('Invalid file size');
-				expect(validationResult.errMsg[1]).toBe('Invalid file type');
+				expect(validationResult.errMsg.length).toBe(2);
+				expect(validationResult.errMsg[1]).toBe('File type is not supported');
 			}
 		}
 	});

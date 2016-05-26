@@ -13,24 +13,28 @@ window.ebFileUploader.fileValidator = (function () {
             this.config = config;
             this.err = [];
         }
+
         //Method to validate file size
         validateSize(validator, isValidSize) {
             //Validating for every comparator defined in config object w.r.t size
             switch(validator.comparator) {
                 case '>':
-                if (!(this.file.size > validator.value)) {
-                    isValidSize = false;  
-                }
-                break;
+                    if (!(this.file.size > validator.value)) {
+                        isValidSize = false;  
+                        this.err.push('file size too small');
+                    }
+                    break;
 
                 case '<=':
-                if (!(this.file.size <= validator.value)) {
-                    isValidSize = false;  
-                }
-                break;
+                    if (!(this.file.size <= validator.value)) {
+                        isValidSize = false; 
+                        this.err.push('file size too big');
+                    }  
+                    break;
             }
             return isValidSize;
         }
+
         //Method to validate file type
         validateType(validator, isValidType) {
             //Validating for every comparator defined in config object w.r.t type
@@ -38,53 +42,55 @@ window.ebFileUploader.fileValidator = (function () {
                 case 'in':
                 if (validator.value.indexOf(this.file.type) === -1) {
                     isValidType = false;
+                    this.err.push('File type is not supported');
                 }
                 break;
             }
             return isValidType;
         }
-        validateFiles() {  
+
+        validateFile() {  
             let isValidFile = true;
             //let isValidFile = false;
             const err = [];
             //Looping over config object
-            for (let configObject of this.config) {
+            for (const objectConfig of this.config) {
                 let isValidSize = true;
                 let isValidType = true;
-                    //Looping over validators[] in config
-                    for (let validator of configObject.validators) {
-                        //Validations for file size
-                        if(configObject.object.identifier === 'size') {
-                            isValidSize = this.validateSize(validator, isValidSize);
-                        }
-                        //Validations for file type
-                        if(configObject.object.identifier === 'type') {
-                            isValidType = this.validateType(validator, isValidType);
-                        }
+                //Looping over validators[] in config
+                for (const validator of objectConfig.validators) {
+                    //Validations for file size
+                    if(objectConfig.object.identifier === 'size') {
+                        isValidSize = this.validateSize(validator, isValidSize);
                     }
-                    //Generating error if file size not valid and setting the entire file as an invalid file
-                    if (!isValidSize) {
-                        isValidFile = false;
-                        this.err.push('Invalid file size');
+                    //Validations for file type
+                    if(objectConfig.object.identifier === 'type') {
+                        isValidType = this.validateType(validator, isValidType);
                     }
-                    //Generating error if file type not valid and setting the entire file as an invalid file
-                    if (!isValidType) {
-                        isValidFile = false;
-                        this.err.push('Invalid file type');
-                    }  
+                }
+                //Generating error if file size not valid and setting the entire file as an invalid file
+                if (!isValidSize) {
+                    isValidFile = false;
+                }
+                //Generating error if file type not valid and setting the entire file as an invalid file
+                if (!isValidType) {
+                    isValidFile = false;
+                }  
             }
             return isValidFile;
         }
+
         //Getter property for boolean isValidFile
         get isValidFile() {
-            return this.validateFiles();
+            return this.validateFile();
         }
+
         //Getter property for error messages
         get errMsg() {
-            let err = this.err;
-            return err;
+            return this.err;
         }
     }
+
     //Contructs the validation result
     return function generateResult(file,config) {
         //Creating object for Checker class
