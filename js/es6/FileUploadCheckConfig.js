@@ -4,7 +4,7 @@
 */
 (function() {
     'use strict';
-    window.ebFileUploader.config = [{
+    const config = [{
         object: {
             identifier: 'size'
             , name: 'file size'
@@ -28,5 +28,7 @@
             , value: 'image/jpeg, image/png, application/pdf'
         }]
     }];
+    window.ebFileUploader = window.ebFileUploader || {};
+    window.ebFileUploader.config = config;
 })(this);
 

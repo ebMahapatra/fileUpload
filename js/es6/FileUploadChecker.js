@@ -1,8 +1,8 @@
 /*Method to validate if file matches user defined constraints*/
-window.ebFileUploader.fileValidator = (function () {
+(function () {
     'use strict';
     /*Class for validation*/
-    window.ebFileUploader.Checker = class {
+    class Checker {
         /**
          * Validates a file wr.t. user defined configuration.
          * @param {FileUploadCheckConfig} config - Configuration for the file to be validated against.
@@ -12,7 +12,7 @@ window.ebFileUploader.fileValidator = (function () {
             //Assigning config value received from FileUploadDirective to config property
             this.config = config;
             //errror messages
-            this.err = [];
+            this.errors = [];
         }
 
         /** @function validateSize 
@@ -25,7 +25,7 @@ window.ebFileUploader.fileValidator = (function () {
                     //Checks if file size not less than minimum size value defined in config
                     if (!(this.file.size > validator.value)) {
                         isValidSize = false;  
-                        this.err.push('file size too small');
+                        this.errors.push('file size too small');
                     }
                     break;
 
@@ -33,9 +33,11 @@ window.ebFileUploader.fileValidator = (function () {
                     //Checks if file size not greater than maximum size value defined in config
                     if (!(this.file.size <= validator.value)) {
                         isValidSize = false; 
-                        this.err.push('file size too big');
+                        this.errors.push('file size too big');
                     }  
                     break;
+
+                    // TODO: Include the default case
             }
             return isValidSize;
         }
@@ -50,7 +52,7 @@ window.ebFileUploader.fileValidator = (function () {
                 //Checks if file type matches one of the types defined in config
                 if (validator.value.indexOf(this.file.type) === -1) {
                     isValidType = false;
-                    this.err.push('File type is not supported');
+                    this.errors.push(this.file.type + ' is not supported. Supported file types are: ' + validator.value);
                 }
                 break;
             }
@@ -95,36 +97,24 @@ window.ebFileUploader.fileValidator = (function () {
             return isValidFile;
         }
 
-        /**
-         * Get isValidFile value.
-         * @return {bool} The isValidFile value.
-         */
-        get isValidFile() {
-            return this.validateFile();
-        }
-
-        /**
-         * Get this.err value.
-         * @return {array} this.err value.
-         */
-        get errMsg() {
-            return this.err;
-        }   
-
-        //Contructs the validation result
+        /** @function generateResult 
+        * Contructs the validation result
+        */
         generateResult(file,config) {
-            //Creating object for Checker class
-            let checker = new window.ebFileUploader.Checker(config);
+            //Creating instance for Checker class
+            const checker = new window.ebFileUploader.Checker(config);
             //validationResult stores the file validation result
             /** @constant
                 @type {object}
                 @default
             */
-            const validationResult = {isValidFile : false, errMsg : ""};
-            validationResult.isValidFile = checker.isValidFile;
-            validationResult.errMsg = checker.errMsg;
+            const validationResult = {isValidFile : false, errorMessages : ""};
+            validationResult.isValidFile = checker.validateFile;
+            validationResult.errorMessages = this.errors;
             return validationResult;
         }
     }
+    window.ebFileUploader = window.ebFileUploader || {};
+    window.ebFileUploader.Checker = Checker;
 
 })(this);

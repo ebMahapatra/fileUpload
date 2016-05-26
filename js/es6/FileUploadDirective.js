@@ -20,40 +20,45 @@ angular.module('eb.fileUpload', [])
         /** @constant
         */
         const vm = this;
-        let formData = new FormData();
+        const formData = new FormData();
         /** @function getErrorMessage 
         * Handles the error messages
         */
-        let getErrorMessage = function(err) {
+        let getErrorMessages = function(error) {
             /** @constant
                 @type {array}
                 @default
             */
-            const errMsg = [];
-            errMsg.push(err);
-            console.log(errMsg);
+            const errorMessages = [];
+            errorMessages.push(error);
+            console.log(errorMessages);
         }
 
         /** @function getTheFiles 
         * Gets the files selected in the UI to be uploaded
         */
         vm.getTheFiles = function ($files){
-            //Looping over the list of selected files to get information regarding every file
-            angular.forEach($files, function(value, key){   
-                //Storing namespace properties for UploadFile and config
-                
-                /** @constant
-                    @type {UploadFile}
-                    @default
-                */
-                const file = window.ebFileUploader.UploadFile;
-                
-                /** @constant
+            //Storing namespace properties for UploadFile and config
+            /** @constant
+                @type {UploadFile}
+                @default
+            */
+            const file = window.ebFileUploader.UploadFile;
+
+            /** @constant
                     @type {config}
                     @default
-                */
-                const config = window.ebFileUploader.config;
+            */
+            const config = window.ebFileUploader.config;
 
+            //Passing config object to Checker class' instance
+            /** @constant
+                @default
+            */
+            const checker = new window.ebFileUploader.Checker(config);
+
+            //Looping over the list of selected files to get information regarding every file
+            angular.forEach($files, function(value, key){   
                 //Storing each file in rawFile property of uploadFile()
                 file.rawFile = value;
                 //Assigning selected file's size to 'size' property of uploadFile()
@@ -61,12 +66,7 @@ angular.module('eb.fileUpload', [])
                 //Assigning selected file's type to 'type' property of uploadFile()
                 file.type = value.type;
                 
-                //Calling validateFile() of FileUploadChecker.js to validate file
-                /** @constant
-                    @default
-                */
-                const checker = new window.ebFileUploader.Checker(config);
-                //Discarding the invalid files, so that only valid files are uploaded
+                // Calling validateFile() for file validation and discarding the invalid files so that they are not uploaded
                 if (checker.validateFile(file)) {
                     //Generating preview of image files
                     //Checking if file is an image as preview is generated only for image files
@@ -87,11 +87,9 @@ angular.module('eb.fileUpload', [])
                     /*vm.cancelUpload=function(){
                         cancelUpload(file.rawFile);
                     }*/
-                }
-
-                //Calling getErrorMessage() to handle error messages
-                else {
-                    getErrorMessage(checker.errMsg);
+                } else {
+                    //Calling getErrorMessage() to handle error messages
+                    getErrorMessages(checker.errors);
                 }
             });
         };

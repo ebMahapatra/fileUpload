@@ -5,7 +5,7 @@
     /** @function upload 
     * Uploads files
     */
-    window.ebFileUploader.upload = function(formData, $http) {
+    let upload = function(formData, $http) {
         //Creating upload request    
         /** @constant
             @type {object}
@@ -30,6 +30,8 @@
             console.log('failure' + reason.data);
         });
     }; 
+    window.ebFileUploader = window.ebFileUploader || {};
+    window.ebFileUploader.upload = upload;
 
 })(this);
 /*let cancelUpload = function(file) {

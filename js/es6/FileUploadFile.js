@@ -3,7 +3,7 @@
 	'use strict';
 	
 	/*Class for uploading file*/
-	window.ebFileUploader.UploadFile = class {
+	class UploadFile {
 		/**
          * Uploads a file to the server.
          */
@@ -16,4 +16,7 @@
 	        this.previewImage = ''; //preview image of file
 	    }
 	};
+
+	window.ebFileUploader = window.ebFileUploader || {};
+    window.ebFileUploader.UploadFile = UploadFile;
 })(this);

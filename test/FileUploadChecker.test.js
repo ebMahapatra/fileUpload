@@ -17,12 +17,15 @@ describe('Validating file attributes', function() {
 			for (let j = 0; j < validFileType.length; j++) {
 				//Assigning every value in array to type atttribute of file
 				file.type = validFileType[j];
-				//Calling fileValidator() to validate
-				let validationResult = window.ebFileUploader.fileValidator(file,config);
+				//creating object of Checker class
+				const checker = new window.ebFileUploader.Checker(config);
+				console.log(checker);
+				//Calling validateFile() to validate
+				const validationResult = checker.validateFile(file);
 				//Checking file's validity for valid size and type
-				expect(validationResult.isValidFile).toBe(true);
+				expect(validationResult).toBe(true);
 				//Checking there exists no error message for valid files
-				expect(validationResult.errMsg.length).toBe(0);
+				expect(checker.errors.length).toBe(0);
 			}
 		}
 	});
@@ -36,12 +39,14 @@ describe('Validating file attributes', function() {
 			for (let j = 0; j < invalidFileType.length; j++) {
 				//Assigning every value in array to type atttribute of file
 				file.type = invalidFileType[j];
-				//Calling fileValidator() to validate
-				let validationResult = window.ebFileUploader.fileValidator(file,config);
+				//creating object of Checker class
+				const checker = new window.ebFileUploader.Checker(config);
+				//Calling validateFile() to validate
+				const validationResult = checker.validateFile(file);
 				//Checking file's validity for valid size and type
-				expect(validationResult.isValidFile).toBe(false);
+				expect(validationResult).toBe(false);
 				//Validating if correct error message is generated
-				expect(validationResult.errMsg[0]).toBe('File type is not supported');
+				expect(checker.errors.length).toBe(1);
 			}
 		}
 	});
@@ -54,12 +59,14 @@ describe('Validating file attributes', function() {
 			for (let j = 0; j < validFileType.length; j++) {
 				//Assigning every value in array to type atttribute of file
 				file.type = validFileType[j];
-				//Calling fileValidator() to validate
-				let validationResult = window.ebFileUploader.fileValidator(file,config);
+				//creating object of Checker class
+				const checker = new window.ebFileUploader.Checker(config);
+				//Calling validateFile() to validate
+				const validationResult = checker.validateFile(file);
 				//Checking file's validity for valid size and type
-				expect(validationResult.isValidFile).toBe(false);
+				expect(validationResult).toBe(false);
 				//Validating if correct error message is generated
-				expect(validationResult.errMsg.length).toBe(1);
+				expect(checker.errors.length).toBe(1);
 			}
 		}
 	});
@@ -72,13 +79,14 @@ describe('Validating file attributes', function() {
 			for (let j = 0; j < invalidFileType.length; j++) {
 				//Assigning every value in array to type atttribute of file
 				file.type = invalidFileType[j];
-				//Calling fileValidator() to validate
-				let validationResult = window.ebFileUploader.fileValidator(file,config);
+				//creating object of Checker class
+				const checker = new window.ebFileUploader.Checker(config);
+				//Calling validateFile() to validate
+				const validationResult = checker.validateFile(file);
 				//Checking file's validity for valid size and type
-				expect(validationResult.isValidFile).toBe(false);
+				expect(validationResult).toBe(false);
 				//Validating if correct error message is generated
-				expect(validationResult.errMsg.length).toBe(2);
-				expect(validationResult.errMsg[1]).toBe('File type is not supported');
+				expect(checker.errors.length).toBe(2);
 			}
 		}
 	});

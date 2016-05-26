@@ -7,7 +7,7 @@
     /** @function handleFilePreview 
     * Handles preview for every image file
     */
-	window.ebFileUploader.handleFilePreview = function(file) {	
+	let handleFilePreview = function(file) {	
         /** @constant
             @type {object}
             @default
@@ -21,7 +21,8 @@
         }
         reader.readAsDataURL(file);
 	};
-    
+    window.ebFileUploader = window.ebFileUploader || {};
+    window.ebFileUploader.handleFilePreview = handleFilePreview;
 })(this);
 
 
