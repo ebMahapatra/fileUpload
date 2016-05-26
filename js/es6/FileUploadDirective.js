@@ -31,7 +31,7 @@ angular.module('eb.fileUpload', [])
             */
             const errorMessages = [];
             errorMessages.push(error);
-            console.log(errorMessages);
+            console.error(errorMessages);
         }
 
         /** @function getTheFiles 
@@ -67,7 +67,7 @@ angular.module('eb.fileUpload', [])
                 file.type = value.type;
                 
                 // Calling validateFile() for file validation and discarding the invalid files so that they are not uploaded
-                if (checker.validateFile(file)) {
+                if (checker.validateFile(file) == 0) {
                     //Generating preview of image files
                     //Checking if file is an image as preview is generated only for image files
                     if (file.type.match(/image.*/)) {
