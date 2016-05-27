@@ -16,7 +16,19 @@
         , {
             comparator: '<='
             , value: 1000
-        }]
+        }
+        , {
+            comparator: '<'
+            , value: 2000
+        }
+        , {
+            comparator: '>='
+            , value: 150
+        }
+        /*, {
+            comparator: '='
+            , value: 200
+        }*/]
     }
     , {
         object: {
@@ -25,7 +37,11 @@
         }
         , validators: [{
             comparator: 'in'
-            , value: 'image/jpeg, image/png, application/pdf'
+            , value: 'IMAGE /jpeg, image/png,   application/pdf'
+        }
+        , {
+            comparator: 'notIn'
+            , value: 'txt'
         }]
     }];
     window.ebFileUploader = window.ebFileUploader || {};

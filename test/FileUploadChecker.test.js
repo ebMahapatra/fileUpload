@@ -4,7 +4,7 @@ let config = window.ebFileUploader.config;
 let validFileSize = [150, 1000];
 let invalidFileSize = [50, 1001, 1000000];
 let validFileType = ['application/pdf', 'image/jpeg', 'image/png'];
-let invalidFileType = ['image/gif', 'txt'];
+let invalidFileType = ['txt'];
 
 //Test cases for validating file size
 describe('Validating file attributes', function() {
@@ -20,7 +20,7 @@ describe('Validating file attributes', function() {
 				//creating object of Checker class
 				const checker = new window.ebFileUploader.Checker(config);
 				//Calling validateFile() to validate file with valid size and type
-				expect(checker.validateFile(file)).toBe(0);
+				expect(checker.validateFile(file).length).toEqual(0);
 			}
 		}
 	});
@@ -37,7 +37,7 @@ describe('Validating file attributes', function() {
 				//creating object of Checker class
 				const checker = new window.ebFileUploader.Checker(config);
 				//Calling validateFile() to validate file with valid size and invalid type
-				expect(checker.validateFile(file)).toBe(1);
+				expect(checker.validateFile(file).length).not.toBe(0);
 			}
 		}
 	});
@@ -53,7 +53,8 @@ describe('Validating file attributes', function() {
 				//creating object of Checker class
 				const checker = new window.ebFileUploader.Checker(config);
 				//Calling validateFile() to validate file with invalid size and valid type
-				expect(checker.validateFile(file)).toBe(1);
+				//expect(checker.validateFile(file)).toBe(1);
+				expect(checker.validateFile(file).length).not.toBe(0);
 			}
 		}
 	});
@@ -69,7 +70,7 @@ describe('Validating file attributes', function() {
 				//creating object of Checker class
 				const checker = new window.ebFileUploader.Checker(config);
 				//Calling validateFile() to validate file with invalid size and intype
-				expect(checker.validateFile(file)).toBe(2);
+				expect(checker.validateFile(file).length).toBeGreaterThan(1);
 			}
 		}
 	});
