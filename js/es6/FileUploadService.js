@@ -1,12 +1,12 @@
 /*Uploads valid files into the server*/
-(function () {
+(function (global) {
     'use strict';
 
     /** @function upload 
     * Uploads files
     */
     let upload = function(formData, $http) {
-        //Creating upload request    
+        // Creating upload request    
         /** @constant
             @type {object}
             @default
@@ -20,7 +20,7 @@
             }
         };
 
-        //sending files         
+        // sending files         
         $http(request).then(function(response) {
             // success callback
             console.log('success: ' + response.data);
@@ -30,8 +30,8 @@
             console.log('failure' + reason.data);
         });
     }; 
-    window.ebFileUploader = window.ebFileUploader || {};
-    window.ebFileUploader.upload = upload;
+    global.ebFileUploader = global.ebFileUploader || {};
+    global.ebFileUploader.upload = upload;
 
 })(this);
 /*let cancelUpload = function(file) {

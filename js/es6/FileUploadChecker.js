@@ -1,88 +1,103 @@
-/*Method to validate if file matches user defined constraints*/
-(function () {
+// Method to validate if file matches user defined constraints
+(function (global) {
     'use strict';
-    /*Class for validation*/
+    
+    // Class for validation
     class Checker {
         /**
-         * Validates a file wr.t. user defined configuration.
-         * @param {FileUploadCheckConfig} config - Configuration for the file to be validated against.
+         * Validates a file with respect to the user defined configuration in config.
+         * @param {object} config - Configuration for the file to be validated against.
          */
-        //constructor function
+        
         constructor(config) {
-            //Assigning config value received from FileUploadDirective to config property
+
+            // Optimizing the config data
+            for (const objectConfig of config) {
+                for (const validator of objectConfig.validators) {
+                    if (typeof validator.value == 'string') {
+
+                        // Converting the type to lowercase
+                        validator.value = validator.value.toLowerCase();
+
+                        // Removing whitespace if exists
+                        validator.value = validator.value.replace(/\s/g, '');
+                    }
+                }
+            }
+            // Assigning config value received from FileUploadDirective to config property
             this.config = config;
-            //errror messages
-            this.errors = [];
-            //this.errors = new Error();
         }
 
-        /** @function validateSize 
-        * Validates file size w.r.t. size defined in config
-        */
-        validateSize(validator) {
-            //Validating for every comparator defined in config object w.r.t size
+        /**
+         * [Validates file size against a set of comparators defined in config]
+         * @param  {[object]} validator [configuration for the current validator]
+         */
+        validateSize(validator, errors) {
+            
+            // Validating for every comparator defined in config object w.r.t size
             switch(validator.comparator) {
-                case '>':
-                    //Checks if file size not less than minimum size value defined in config
+                case '>': {
+                    
+                    // Checks if file size not less than minimum size value defined in config
                     if (!(this.file.size > validator.value)) {
-                        const error = new window.ebFileUploader.Error('file size too small');
-                        this.errors.push(error);
+                        errors.push(new Error('file size too small'));
                     }
                     break;
-
-                case '<=':
-                    //Checks if file size not greater than or equal to maximum size value defined in config
+                }
+                
+                case '<=': {
+                    
+                    // Checks if file size not greater than or equal to maximum size value defined in config
                     if (!(this.file.size <= validator.value)) {
-                        const error = new window.ebFileUploader.Error('file size too big');
-                        this.errors.push(error);
+                        errors.push(new Error('file size too big'));
                     }  
                     break;
+                }
 
-                 case '<':
-                    //Checks if file size not greater than maximum size value defined in config
+                 case '<': {
+                    
+                    // Checks if file size not greater than maximum size value defined in config
                     if (!(this.file.size < validator.value)) {
-                        const error = new window.ebFileUploader.Error('file size too big');
-                        this.errors.push(error);
+                        errors.push(new Error('file size too big'));
                     }  
                     break;
-
-                case '>=':
-                    //Checks if file size not less than or equal to minimum size value defined in config
+                }
+                    
+                case '>=': {
+                    
+                    // Checks if file size not less than or equal to minimum size value defined in config
                     if (!(this.file.size >= validator.value)) {
-                        const error = new window.ebFileUploader.Error('file size too small');+
-                        this.errors.push(error);
+                        errors.push(new Error('file size too small'));
                     }  
                     break;
+                }
 
-                default:
-                    const error = new window.ebFileUploader.Error('Case cannot be handled');
-                    this.errors.push(error);
+                default: {
+                    errors.push(new Error('Case cannot be handled'));
+                }
             }
         }
 
-        /** @function validateType 
-        * Validates file type w.r.t. type defined in config
-        */
-        validateType(validator) {
-            //Removing whitespace if exists
-            validator.value = validator.value.replace(/\s/g, '');
-            //Converting the type to lowercase
-            validator.value = validator.value.toLowerCase();
-            //Validating for every comparator defined in config object w.r.t type
+        /**
+         * [Validates file type against a set of comparators defined in config]
+         * @param  {[object]} validator [configuration for the current validator]
+         */
+        validateType(validator, errors) {
+            
+            // Validating for every comparator defined in config object w.r.t type
             switch(validator.comparator) {
                 case 'in':
-                    //Checks if file type matches one of the types defined in config
+                    
+                    // Checks if file type matches one of the types defined in config
                     if (validator.value.indexOf(this.file.type) === -1) {
-                        const error = new window.ebFileUploader.Error(this.file.type + ' is not supported. Supported file types are: ' + validator.value);
-                        this.errors.push(error);
+                        errors.push(new Error(this.file.type + ' is not supported. Supported file types are: ' + validator.value));
                     }
                     break;
                 case 'notIn':
-                    //Checks if file type matches one of the restricted types defined in config
+                   
+                    // Checks if file type matches one of the restricted types defined in config
                     if (!(validator.value.indexOf(this.file.type) === -1)) {
-                        //this.errors.push(this.file.type + ' is not supported.');
-                        const error = new window.ebFileUploader.Error(this.file.type + ' is not supported.');
-                        this.errors.push(error);
+                        errors.push(new Error(this.file.type + ' is not supported.'));
                     }
                     break;
             }
@@ -91,33 +106,34 @@
         /** @function validateFile 
         * Validates file based on results from validateSize() and validateType()
         */
+        /**
+         * [Validates file based on results from validateSize() and validateType()]
+         * @param  {[object]} file [file that needs to be validated]
+         * @return {[array]} errors [list of errors(if any) encountered during validation]
+         */
         validateFile(file) {  
             this.file = file;
-            //Looping over config object
-            /** @constant
-            */
+            const errors = [];
             for (const objectConfig of this.config) {
-                //Looping over validators[] in config
-                /** @constant
-                 */
                 for (const validator of objectConfig.validators) {
-                    //Validations for file size
+                    
+                    // Validations for file size
                     if(objectConfig.object.identifier === 'size') {
-                        this.validateSize(validator);
+                        this.validateSize(validator, errors);
                     }
-                    //Validations for file type
+                    
+                    // Validations for file type
                     if(objectConfig.object.identifier === 'type') {
-                        this.validateType(validator);
+                        this.validateType(validator, errors);
                     }
                 }
             }
-            /*this.errors.length holds information if the file is valid or invalid.
+            /*this.errors holds information if the file is valid or invalid.
             If file is valid, this.errors.length == 0 else this.errors.length > 0 
             */
-            console.log(this.errors);
-            return this.errors;
+            return errors;
         }
     }
-    window.ebFileUploader = window.ebFileUploader || {};
-    window.ebFileUploader.Checker = Checker;
+    global.ebFileUploader = global.ebFileUploader || {};
+    global.ebFileUploader.Checker = Checker;
 })(this);
