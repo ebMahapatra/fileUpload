@@ -22,8 +22,6 @@
     "method-override": "^2.1.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.9.0",
-    "babel-preset-es2015": "^6.9.0",
     "browserify": "^13.0.1",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
@@ -36,20 +34,6 @@
   },
   "scripts": {
     "test": "./node_modules/karma/bin/karma start karma.conf.js"
-  },
-  "babel": {
-    "presets": [
-      "es2015"
-    ],
-    "plugins": [
-      [
-        "transform-es2015-modules-commonjs",
-        {
-          "allowTopLevelThis": false,
-          "strict": false,
-          "loose": false
-        }
-      ]
-    ]
   }
+ 
 }

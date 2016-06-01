@@ -1,10 +1,11 @@
 'use strict';
-let file = window.ebFileUploader.UploadFile;
-let config = window.ebFileUploader.config;
-let validFileSize = [150, 1000];
-let invalidFileSize = [50, 1001, 1000000];
-let validFileType = ['application/pdf', 'image/jpeg', 'image/png'];
-let invalidFileType = ['txt'];
+//let file = global.ebFileUploader.UploadFile;
+//console.log(global.file);
+const config = global.ebFileUploader.config;
+const validFileSize = [150, 1000];
+const invalidFileSize = [50, 1001, 1000000];
+const validFileType = ['application/pdf', 'image/jpeg', 'image/png'];
+const invalidFileType = ['txt'];
 
 //Test cases for validating file size
 describe('Validating file attributes', function() {
@@ -18,7 +19,7 @@ describe('Validating file attributes', function() {
 				//Assigning every value in array to type atttribute of file
 				file.type = validFileType[j];
 				//creating object of Checker class
-				const checker = new window.ebFileUploader.Checker(config);
+				const checker = new global.ebFileUploader.Checker(config);
 				//Calling validateFile() to validate file with valid size and type
 				expect(checker.validateFile(file).length).toEqual(0);
 			}
@@ -35,7 +36,7 @@ describe('Validating file attributes', function() {
 				//Assigning every value in array to type atttribute of file
 				file.type = invalidFileType[j];
 				//creating object of Checker class
-				const checker = new window.ebFileUploader.Checker(config);
+				const checker = new global.ebFileUploader.Checker(config);
 				//Calling validateFile() to validate file with valid size and invalid type
 				expect(checker.validateFile(file).length).not.toBe(0);
 			}
@@ -51,7 +52,7 @@ describe('Validating file attributes', function() {
 				//Assigning every value in array to type atttribute of file
 				file.type = validFileType[j];
 				//creating object of Checker class
-				const checker = new window.ebFileUploader.Checker(config);
+				const checker = new global.ebFileUploader.Checker(config);
 				//Calling validateFile() to validate file with invalid size and valid type
 				//expect(checker.validateFile(file)).toBe(1);
 				expect(checker.validateFile(file).length).not.toBe(0);
@@ -68,7 +69,7 @@ describe('Validating file attributes', function() {
 				//Assigning every value in array to type atttribute of file
 				file.type = invalidFileType[j];
 				//creating object of Checker class
-				const checker = new window.ebFileUploader.Checker(config);
+				const checker = new global.ebFileUploader.Checker(config);
 				//Calling validateFile() to validate file with invalid size and intype
 				expect(checker.validateFile(file).length).toBeGreaterThan(1);
 			}

@@ -20,8 +20,8 @@ module.exports = function(config) {
         , "./js/es6/FileUploadCheckConfig.js"
         , "./js/es6/FileUploadFile.js"
         , "./js/es6/FileUploadChecker.js"
-        , "./js/es6/Error.js"
         , "./test/FileUploadChecker.test.js"
+        , "./test/FileUploadService.test.js"
     ],
 
 
