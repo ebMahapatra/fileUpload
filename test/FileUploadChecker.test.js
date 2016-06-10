@@ -1,7 +1,7 @@
 'use strict';
-//let file = global.ebFileUploader.UploadFile;
-//console.log(global.file);
-const config = global.ebFileUploader.config;
+var expect = chai.expect;
+const file = window.ebFileUploader.UploadFile;
+const config = window.ebFileUploader.config;
 const validFileSize = [150, 1000];
 const invalidFileSize = [50, 1001, 1000000];
 const validFileType = ['application/pdf', 'image/jpeg', 'image/png'];
@@ -9,7 +9,7 @@ const invalidFileType = ['txt'];
 
 //Test cases for validating file size
 describe('Validating file attributes', function() {
-	it('Validate with valid file size and valid file type and check error message', function() {
+	it('check for valid file size and valid file type', function() {
 		//Looping over the array for valid file sizes
 		for (let i = 0; i < validFileSize.length; i++) {
 			//Assigning every value in array to size atttribute of file
@@ -19,9 +19,9 @@ describe('Validating file attributes', function() {
 				//Assigning every value in array to type atttribute of file
 				file.type = validFileType[j];
 				//creating object of Checker class
-				const checker = new global.ebFileUploader.Checker(config);
+				 const checker = new window.ebFileUploader.Checker(config);
 				//Calling validateFile() to validate file with valid size and type
-				expect(checker.validateFile(file).length).toEqual(0);
+				expect(checker.validateFile(file).length).eql(0);
 			}
 		}
 	});
@@ -36,9 +36,10 @@ describe('Validating file attributes', function() {
 				//Assigning every value in array to type atttribute of file
 				file.type = invalidFileType[j];
 				//creating object of Checker class
-				const checker = new global.ebFileUploader.Checker(config);
+				const checker = new window.ebFileUploader.Checker(config);
 				//Calling validateFile() to validate file with valid size and invalid type
-				expect(checker.validateFile(file).length).not.toBe(0);
+				//expect(checker.validateFile(file).length).not.to.equal(0);
+				expect(checker.validateFile(file).length).gte(1);
 			}
 		}
 	});
@@ -52,10 +53,10 @@ describe('Validating file attributes', function() {
 				//Assigning every value in array to type atttribute of file
 				file.type = validFileType[j];
 				//creating object of Checker class
-				const checker = new global.ebFileUploader.Checker(config);
+				const checker = new window.ebFileUploader.Checker(config);
 				//Calling validateFile() to validate file with invalid size and valid type
-				//expect(checker.validateFile(file)).toBe(1);
-				expect(checker.validateFile(file).length).not.toBe(0);
+				//expect(checker.validateFile(file).length).not.to.equal(0);
+				expect(checker.validateFile(file).length).gte(1);
 			}
 		}
 	});
@@ -69,9 +70,9 @@ describe('Validating file attributes', function() {
 				//Assigning every value in array to type atttribute of file
 				file.type = invalidFileType[j];
 				//creating object of Checker class
-				const checker = new global.ebFileUploader.Checker(config);
+				const checker = new window.ebFileUploader.Checker(config);
 				//Calling validateFile() to validate file with invalid size and intype
-				expect(checker.validateFile(file).length).toBeGreaterThan(1);
+				expect(checker.validateFile(file).length).gte(2);
 			}
 		}
 	});

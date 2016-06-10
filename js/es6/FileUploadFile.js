@@ -5,11 +5,10 @@
     // Class for uploading file
     class UploadFile {
         /**
-         * @class
          * set up the class, define class variables, set defaults for them
          */
         constructor() {
-            this.rawFile; // file
+            this.selectedFile; // file
             this.status = ''; // queued, uploading, success, error
             this.type = ''; //  image, pdf. text etc.
             this.size = 0; // file size

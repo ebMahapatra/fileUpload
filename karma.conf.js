@@ -10,17 +10,20 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'browserify'],
+    frameworks: ['jasmine', 'chai', 'browserify'],
+    //frameworks: ['mocha', 'chai', 'browserify'],
 
 
     // list of files / patterns to load in the browser
     files: [
         "./js/lib/angular.min.js"
-        ,"./js/es6/FileUploadDirective.js"
-        , "./js/es6/FileUploadCheckConfig.js"
+       // , "./js/lib/angular-mocks.js"
+        //, "./js/es6/FileUploadCheckConfig.js"
         , "./js/es6/FileUploadFile.js"
-        , "./js/es6/FileUploadChecker.js"
-        , "./test/FileUploadChecker.test.js"
+        //, "./js/es6/FileUploadChecker.js"
+        , "./js/es6/FileUploadService.js"
+        ,"./js/es6/FileUploadDirective.js"
+        //, "./js/es6/global.js"
         , "./test/FileUploadService.test.js"
     ],
 

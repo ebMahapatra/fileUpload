@@ -1,7 +1,7 @@
 "use strict";
 // server.js
 
-    // set up ========================
+    // set up 
     var express = require('express');
     var app = express();                               // create our app w/ express
     var morgan = require('morgan');             // log requests to the console (express4)
@@ -11,9 +11,7 @@
     var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
     var multer = require('multer');
 
-    // configuration =================
-
-   
+    // configuration 
     app.use(express.static(__dirname));                   // set the static files location 
     app.use(morgan('dev'));                                         // log every request to the console
     app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
@@ -34,9 +32,10 @@
     //Single file api call to multer as only one file gets associated with an incoming request
     var upload = multer({ storage : storage }).single('file');
 
-    // application ------------------------------------------------------------
+    // application
 
     //GET requests
+    
     app.get('/index.html', function(req, res) {
     // load the single view file (angular will handle the page changes on the front-end)
         res.sendFile(__dirname + '/index.html');
@@ -47,7 +46,7 @@
         upload(req,res,function(err){
             if(err){
                   res.end("Error occurred while uploading file");
-                  console.log("Error occured while uploading file - " );
+                  console.log("Error occured while uploading file - " + err);
                   return;
             }
              res.end("File is uploaded");

@@ -2,10 +2,9 @@
 (function(global) {
     'use strict';
     /**
-     * @function
-     * [Handles preview for every image file]
-     * @param  {[UploadFile]} file [image file]
-     * @return [image src]
+     * Handles preview for every image file
+     * @param  {UploadFile} file - image file
+     * @return image src
      */
     const handleFilePreview = function(file) {
         const reader = new FileReader();

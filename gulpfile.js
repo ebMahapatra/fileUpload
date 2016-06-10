@@ -1,42 +1,40 @@
 'use strict';
-let gulp = require('gulp'),
-    watch = require('gulp-watch'),
-    sass = require('gulp-sass'),
-    minifycss = require('gulp-minify-css'),
-    livereload = require('gulp-livereload'),
-    babel = require('gulp-babel'),
-    rename = require('gulp-rename'),
-    del = require('del');
+const gulp = require('gulp');
+const watch = require('gulp-watch');
+const sass = require('gulp-sass');
+const minifycss = require('gulp-minify-css');
+const livereload = require('gulp-livereload');
+const babel = require('gulp-babel');
+const rename = require('gulp-rename');
+const del = require('del');
 
-gulp.task('clean-temp', function(){
-    return del(['js/es5']);
-});
+gulp.task('clean-temp', () => del(['js/es5']) 
+);
 
-gulp.task('es6-commonjs',['clean-temp'], function(){
-    return gulp.src(['js/es6/*.js'])
+gulp.task('es6-commonjs',['clean-temp'], () => 
+    gulp.src(['js/es6/*.js'])
         .pipe(babel())
         .pipe(gulp.dest('js/es5'))
-        .pipe(livereload());
-});
+        .pipe(livereload())
+);
 
 /*Compile Sass files*/
-gulp.task('sass', ['clean-stylesheets'],function() {
-    return gulp.src('scss/*.scss')
+gulp.task('sass', ['clean-stylesheets'],() =>
+    gulp.src('scss/*.scss')
         .pipe(sass())
         .pipe(gulp.dest('stylesheets'))
-        .pipe(livereload());
-});
+        .pipe(livereload())
+);
 
-gulp.task('clean-stylesheets', function(){
-    return del(['stylesheets/*.css']);
-});
+gulp.task('clean-stylesheets', () => del(['stylesheets/*.css'])
+);
 
 /*Watch files for changes*/
-gulp.task('watch', function(){
+
+gulp.task('watch', () => {
     livereload.listen();
     gulp.watch('js/es6/*.js', ['es6-commonjs']);
     gulp.watch('scss/*.scss', ['sass']);
-
     gulp.watch('index.html').on('change', livereload.changed);
 });
 

@@ -37,7 +37,7 @@
             value: 'IMAGE /jpeg, image/png,   application/pdf'
         }, {
             comparator: 'notIn',
-            value: 'txt'
+            value: 'txt, csv'
         }]
     }];
     global.ebFileUploader = global.ebFileUploader || {};
