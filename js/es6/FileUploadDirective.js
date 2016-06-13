@@ -39,6 +39,7 @@
 
             // Looping over the list of selected files to get information regarding every file
             angular.forEach($files, function(value, key) {
+                console.log(value);
 
                 // Passing each selectd file to build file object in UploadFile
                 const file = new global.ebFileUploader.BuildFile(value);

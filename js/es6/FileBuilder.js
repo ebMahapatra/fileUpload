@@ -5,7 +5,7 @@
     class BuildFile {
         constructor(selectedFile) {
             
-            // Storing namespace properties for config
+            // Storing namespace properties for file
             const file = global.ebFileUploader.UploadFile;
             
             // Storing each file in selectedFile property of uploadFile()

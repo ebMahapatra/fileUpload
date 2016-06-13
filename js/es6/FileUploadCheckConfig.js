@@ -34,10 +34,10 @@
         },
         validators: [{
             comparator: 'in',
-            value: 'IMAGE /jpeg, image/png,   application/pdf'
+            value: 'IMAGE/jpeg, image/png, application/pdf'
         }, {
             comparator: 'notIn',
-            value: 'txt, csv'
+            value: 'text/plain, csv'
         }]
     }];
     global.ebFileUploader = global.ebFileUploader || {};

@@ -2,9 +2,9 @@
 (function (global) {
     'use strict';
 
-    //Uploads files
+    // Uploads files
     let upload = function(filesToUpload) {
-        var formData = new FormData();
+        const formData = new FormData();
         formData.append('file' , filesToUpload.get('file'));
        
         // Creating upload request  
